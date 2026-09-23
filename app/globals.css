@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Hotel design system — light mode defaults */
+    --background: 42 25% 95%; /* #f4f1ec cream */
+    --foreground: 0 0% 6%; /* #0f0f0f near-black */
+    --card: 0 0% 100%; /* white cards on cream */
+    --card-foreground: 0 0% 6%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 6%;
+    --primary: 0 0% 6%; /* near-black primary */
+    --primary-foreground: 42 25% 95%;
+    --secondary: 42 15% 90%;
+    --secondary-foreground: 0 0% 6%;
+    --muted: 42 12% 88%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 37 53% 54%; /* #c99b4a gold */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 42 12% 84%;
+    --input: 42 12% 84%;
+    --ring: 37 53% 54%; /* gold ring */
+    --chart-1: 37 53% 54%;
+    --chart-2: 0 0% 20%;
+    --chart-3: 42 25% 80%;
+    --chart-4: 37 53% 40%;
+    --chart-5: 0 0% 60%;
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .container-hotel {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn-gold {
+    @apply inline-flex items-center justify-center bg-hotel-gold text-white px-6 py-3 text-sm font-sans font-medium tracking-wider uppercase transition-all duration-300 hover:bg-hotel-gold-dark hover:shadow-lg;
+  }
+  .btn-gold-outline {
+    @apply inline-flex items-center justify-center border border-hotel-gold text-hotel-gold px-6 py-3 text-sm font-sans font-medium tracking-wider uppercase transition-all duration-300 hover:bg-hotel-gold hover:text-white;
+  }
+  .eyebrow {
+    @apply text-hotel-gold text-xs font-sans font-medium tracking-[0.2em] uppercase;
+  }
+  .heading-serif {
+    @apply font-serif text-3xl md:text-4xl lg:text-5xl leading-tight;
+  }
+  .gold-divider {
+    @apply block w-16 h-px bg-hotel-gold my-4;
+  }
+  .link-nav {
+    @apply text-sm font-sans font-medium tracking-wide text-white/80 transition-colors duration-200 hover:text-hotel-gold;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f4f1ec;
+}
+::-webkit-scrollbar-thumb {
+  background: #c99b4a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b8893a;
+}
