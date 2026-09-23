@@ -1,0 +1,88 @@
+import type { GalleryImage } from './types';
+
+export const seedGallery: GalleryImage[] = [
+  {
+    id: 'gal-001',
+    url: 'https://images.pexels.com/photos/14011664/pexels-photo-14011664.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'hotel',
+    caption: 'Grand lobby with marble floors and chandelier',
+    sort_order: 1,
+  },
+  {
+    id: 'gal-002',
+    url: 'https://images.pexels.com/photos/26729563/pexels-photo-26729563.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'hotel',
+    caption: 'Hotel hallway with contemporary decor',
+    sort_order: 2,
+  },
+  {
+    id: 'gal-003',
+    url: 'https://images.pexels.com/photos/26729556/pexels-photo-26729556.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'hotel',
+    caption: 'Lounge area with comfortable armchairs',
+    sort_order: 3,
+  },
+  {
+    id: 'gal-004',
+    url: 'https://images.pexels.com/photos/6466236/pexels-photo-6466236.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'rooms',
+    caption: 'Deluxe Room with plush headboard and curtains',
+    sort_order: 4,
+  },
+  {
+    id: 'gal-005',
+    url: 'https://images.pexels.com/photos/2725675/pexels-photo-2725675.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'rooms',
+    caption: 'Executive Room with seating area',
+    sort_order: 5,
+  },
+  {
+    id: 'gal-006',
+    url: 'https://images.pexels.com/photos/34645131/pexels-photo-34645131.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'rooms',
+    caption: 'Presidential Suite with warm lighting',
+    sort_order: 6,
+  },
+  {
+    id: 'gal-007',
+    url: 'https://images.pexels.com/photos/17057034/pexels-photo-17057034.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'dining',
+    caption: 'Fine dining table setup',
+    sort_order: 7,
+  },
+  {
+    id: 'gal-008',
+    url: 'https://images.pexels.com/photos/24433378/pexels-photo-24433378.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'dining',
+    caption: 'Romantic dinner table setting',
+    sort_order: 8,
+  },
+  {
+    id: 'gal-009',
+    url: 'https://images.pexels.com/photos/7222168/pexels-photo-7222168.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'wellness',
+    caption: 'Indoor spa pool',
+    sort_order: 9,
+  },
+  {
+    id: 'gal-010',
+    url: 'https://images.pexels.com/photos/7222170/pexels-photo-7222170.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'wellness',
+    caption: 'Spa lounge area',
+    sort_order: 10,
+  },
+  {
+    id: 'gal-011',
+    url: 'https://images.pexels.com/photos/27758878/pexels-photo-27758878.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'events',
+    caption: 'Modern ballroom interior',
+    sort_order: 11,
+  },
+  {
+    id: 'gal-012',
+    url: 'https://images.pexels.com/photos/19569865/pexels-photo-19569865.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+    category: 'events',
+    caption: 'Grand banquet hall with chandeliers',
+    sort_order: 12,
+  },
+];
