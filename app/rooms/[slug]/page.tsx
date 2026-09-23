@@ -3,8 +3,8 @@
 import { useState, useMemo } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Bath, BedDouble, Check, ChevronLeft, ChevronRight, Snowflake, Tv, Wifi, Wine, Users, Ruler } from 'lucide-react';
-import { getRoomBySlug, calculateBookingTotal } from '@/lib/api';
+import { ArrowLeft, Bath, BedDouble, Snowflake, Tv, Wifi, Wine, Users, Ruler } from 'lucide-react';
+import { getRoomBySlug } from '@/lib/api';
 
 const amenityMap: Record<string, { icon: typeof Wifi; label: string }> = {
   wifi: { icon: Wifi, label: 'High-Speed Wi-Fi' },

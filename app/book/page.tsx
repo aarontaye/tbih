@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, Check, CircleCheck as CheckCircle2, ClipboardList, CreditCard, Search, User } from 'lucide-react';
-import { getRooms, getRoomBySlug, getBookings, createBooking, calculateBookingTotal } from '@/lib/api';
+import { getRooms, getBookings, createBooking, calculateBookingTotal } from '@/lib/api';
 import type { Room } from '@/lib/data/types';
 import type { BookingInput } from '@/lib/api';
 
@@ -26,7 +26,7 @@ function isRoomAvailable(roomId: string, checkIn: string, checkOut: string): boo
   return !bookings.some(
     (b) =>
       b.room_id === roomId &&
-      b.status !== 'cancelled' &&
+      b.status === 'confirmed' &&
       datesOverlap(checkIn, checkOut, b.check_in, b.check_out)
   );
 }
@@ -43,6 +43,7 @@ function BookingContent() {
 
   const [step, setStep] = useState<Step>('search');
   const [searchPerformed, setSearchPerformed] = useState(false);
+  const [searchError, setSearchError] = useState('');
 
   const [searchForm, setSearchForm] = useState({
     checkIn: searchParams.get('checkIn') ?? '',
@@ -77,11 +78,31 @@ function BookingContent() {
 
   const availableRooms = useMemo(() => {
     if (!searchPerformed) return allRooms;
-    return allRooms.filter((room) => isRoomAvailable(room.id, searchForm.checkIn, searchForm.checkOut));
-  }, [searchPerformed, allRooms, searchForm.checkIn, searchForm.checkOut]);
+    return allRooms.filter(
+      (room) =>
+        (!searchForm.roomSlug || room.slug === searchForm.roomSlug) &&
+        room.capacity_adults >= searchForm.adults &&
+        room.capacity_children >= searchForm.children &&
+        isRoomAvailable(room.id, searchForm.checkIn, searchForm.checkOut)
+    );
+  }, [
+    searchPerformed,
+    allRooms,
+    searchForm.roomSlug,
+    searchForm.adults,
+    searchForm.children,
+    searchForm.checkIn,
+    searchForm.checkOut,
+  ]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    if (nights < 1) {
+      setSearchError('Please choose a check-out date after your check-in date.');
+      setSearchPerformed(false);
+      return;
+    }
+    setSearchError('');
     setSearchPerformed(true);
   };
 
@@ -94,6 +115,13 @@ function BookingContent() {
   const handleGuestSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedRoom) return;
+    if (!isRoomAvailable(selectedRoom.id, searchForm.checkIn, searchForm.checkOut)) {
+      setSearchError('This room is no longer available for those dates. Please choose another room.');
+      setStep('search');
+      setSearchPerformed(true);
+      setSelectedRoom(null);
+      return;
+    }
     const total = calculateBookingTotal(selectedRoom, searchForm.checkIn, searchForm.checkOut);
     const input: BookingInput = {
       room_id: selectedRoom.id,
@@ -117,6 +145,7 @@ function BookingContent() {
   const resetBooking = () => {
     setStep('search');
     setSearchPerformed(false);
+    setSearchError('');
     setSelectedRoom(null);
     setBookingResult(null);
     setGuestForm({ guest_name: '', guest_email: '', guest_phone: '', special_requests: '' });
@@ -198,6 +227,7 @@ function BookingContent() {
               <button type="submit" className="btn-gold mt-6">
                 <Search className="mr-2 h-4 w-4" /> Search Rooms
               </button>
+              {searchError && <p className="mt-4 text-sm text-red-700" role="alert">{searchError}</p>}
             </form>
 
             {searchPerformed && (
@@ -239,7 +269,7 @@ function BookingContent() {
               </div>
             )}
 
-            {!searchPerformed && (
+            {!searchPerformed && !searchError && (
               <div className="mx-auto max-w-3xl">
                 <div className="mb-10 text-center">
                   <span className="eyebrow">How it works</span>
