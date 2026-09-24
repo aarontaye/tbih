@@ -67,6 +67,12 @@
   .link-nav {
     @apply text-sm font-sans font-medium tracking-wide text-white/80 transition-colors duration-200 hover:text-hotel-gold;
   }
+  .form-label {
+    @apply mb-1.5 block text-[10px] uppercase tracking-wider text-[#a09890];
+  }
+  .form-field {
+    @apply w-full border border-[#e0d8cc] bg-white px-3 py-2.5 text-sm text-[#171513] outline-none transition-colors placeholder:text-[#a09890] focus:border-[#b9893e];
+  }
 }
 
 /* Custom scrollbar */
