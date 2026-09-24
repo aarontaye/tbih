@@ -13,7 +13,7 @@ const navLinks = [
   { href: '/offers', label: 'Offers & Packages' },
   { href: '/dining', label: 'Dining' },
   { href: '/wellness', label: 'Wellness & Fitness' },
-  { href: '/meetings', label: 'Meetings & Events' },
+  { href: '/meetings-events', label: 'Meetings & Events' },
   { href: '/experiences', label: 'Experiences' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/about', label: 'About Us' },

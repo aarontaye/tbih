@@ -13,6 +13,7 @@ import { seedRooms } from './data/seed-rooms';
 import { seedOffers } from './data/seed-offers';
 import { seedGallery } from './data/seed-gallery';
 import { seedAdminUsers } from './data/seed-admin';
+import { createClient } from './supabase-client';
 
 // ─────────────────────────────────────────────────────────────
 // localStorage-backed mock data layer
@@ -194,7 +195,7 @@ export function getEventInquiries(): EventInquiry[] {
   return readStore<EventInquiry>(STORAGE_KEYS.eventInquiries);
 }
 
-export function createEventInquiry(input: EventInquiryInput): EventInquiry {
+export async function createEventInquiry(input: EventInquiryInput): Promise<EventInquiry> {
   const inquiry: EventInquiry = {
     id: generateId('inquiry'),
     event_type: input.event_type,
@@ -207,9 +208,18 @@ export function createEventInquiry(input: EventInquiryInput): EventInquiry {
     status: 'new',
     created_at: new Date().toISOString(),
   };
-  const all = readStore<EventInquiry>(STORAGE_KEYS.eventInquiries);
-  all.push(inquiry);
-  writeStore(STORAGE_KEYS.eventInquiries, all);
+
+  const { error } = await createClient().from('event_inquiries').insert({
+    event_type: inquiry.event_type,
+    name: inquiry.name,
+    email: inquiry.email,
+    phone: inquiry.phone,
+    preferred_date: inquiry.preferred_date,
+    guest_count: inquiry.guest_count,
+    message: inquiry.message,
+  });
+
+  if (error) throw new Error('Unable to submit the event inquiry.');
   return inquiry;
 }
 
@@ -276,23 +286,19 @@ export function getNewsletterSubscribers(): NewsletterSubscriber[] {
   return readStore<NewsletterSubscriber>(STORAGE_KEYS.newsletterSubscribers);
 }
 
-export function subscribeToNewsletter(email: string): NewsletterSubscriber {
-  const existing = readStore<NewsletterSubscriber>(
-    STORAGE_KEYS.newsletterSubscribers
-  );
-  if (existing.find((s) => s.email.toLowerCase() === email.toLowerCase())) {
-    return existing.find(
-      (s) => s.email.toLowerCase() === email.toLowerCase()
-    )!;
-  }
-  const sub: NewsletterSubscriber = {
+export async function subscribeToNewsletter(email: string): Promise<NewsletterSubscriber> {
+  const subscriber: NewsletterSubscriber = {
     id: generateId('sub'),
     email,
     subscribed_at: new Date().toISOString(),
   };
-  existing.push(sub);
-  writeStore(STORAGE_KEYS.newsletterSubscribers, existing);
-  return sub;
+
+  const { error } = await createClient()
+    .from('newsletter_subscribers')
+    .upsert({ email: subscriber.email }, { onConflict: 'email', ignoreDuplicates: true });
+
+  if (error) throw new Error('Unable to subscribe right now.');
+  return subscriber;
 }
 
 // ── Price calculation helper ──────────────────────────────────

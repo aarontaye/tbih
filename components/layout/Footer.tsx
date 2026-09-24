@@ -10,7 +10,7 @@ const quickLinks = [
 ];
 
 const exploreLinks = [
-  { href: '/meetings', label: 'Meetings & Events' },
+  { href: '/meetings-events', label: 'Meetings & Events' },
   { href: '/experiences', label: 'Experiences' },
   { href: '/gallery', label: 'Gallery' },
   { href: '/about', label: 'About Us' },
